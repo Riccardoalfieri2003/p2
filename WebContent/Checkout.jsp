@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="it.unisa.model.*, java.util.*"%>
 <!DOCTYPE html>
@@ -52,7 +54,7 @@
 		</div>
 		<div class="tableRow">
 			<p>Città:</p>
-			<p><input type="text" name="città" value="<%= spedizione.getCittà() %>" required/></p>
+			<p><input type="text" name="città" value="<%= spedizione.getCitta() %>" required/></p>
 		</div>
 		
 		<%}else{ %> 
