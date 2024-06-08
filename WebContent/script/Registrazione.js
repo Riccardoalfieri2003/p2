@@ -93,6 +93,7 @@ function validate(obj) {
 		else {
 		document.getElementById("errUser").innerHTML = "";
 		}		
+		
 	
 	var pw = document.getElementsByName("pw")[0];
 	if(!checkPassword(pw)) {
