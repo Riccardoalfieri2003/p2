@@ -1,6 +1,3 @@
-/**
- * 
- */
 function checkNomeCognome(inputtxt) {
 	var nome = /^[A-Za-z]+$/;
 	if(inputtxt.value.match(nome)) 
@@ -11,7 +8,7 @@ function checkNomeCognome(inputtxt) {
 
 
 function checkEmail(inputtxt) {
-	var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	var email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Nuova espressione regolare per la convalida dell'email
 	if(inputtxt.value.match(email)) 
 		return true;
 	
@@ -114,6 +111,5 @@ function validate(obj) {
 
 
 function myFunction(x) {
-  		x.style.background = "yellow";
-		}
-		
+  	x.style.background = "yellow";
+}
