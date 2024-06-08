@@ -22,14 +22,16 @@ public class PathTraversalFilter implements Filter {
 
         String page = httpRequest.getParameter("page");
 
-       
-        if (page != null && (page.contains("..") || page.contains("/"))) {
+        if (page != null && (page.contains("..") || page.contains("/")) && !isStaticResource(page)) {
             httpResponse.sendRedirect("error.jsp"); // reindirizza a una pagina di errore
             return;
         }
-		
-        
+
         chain.doFilter(request, response);
+    }
+
+    private boolean isStaticResource(String page) {
+        return page.endsWith(".css") || page.endsWith(".js") || page.endsWith(".png") || page.endsWith(".jpg") || page.endsWith(".gif");
     }
 
     @Override

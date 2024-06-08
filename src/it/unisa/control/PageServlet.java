@@ -17,12 +17,16 @@ public class PageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = request.getParameter("page");
 
-        if (page == null || DISALLOWED_FILES.contains(page)) {
+        if (page == null || DISALLOWED_FILES.contains(page) || isStaticResource(page)) {
             response.sendRedirect("error.jsp"); // reindirizza a una pagina di errore
             return;
         }
 
         // Carica la pagina richiesta
         request.getRequestDispatcher("/" + page).forward(request, response);
+    }
+
+    private boolean isStaticResource(String page) {
+        return page.endsWith(".css") || page.endsWith(".js") || page.endsWith(".png") || page.endsWith(".jpg") || page.endsWith(".gif");
     }
 }

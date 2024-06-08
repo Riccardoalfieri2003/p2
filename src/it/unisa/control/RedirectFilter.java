@@ -21,16 +21,16 @@ public class RedirectFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String page = httpRequest.getParameter("page");
 
-        // Verifica se il percorso richiesto è uno dei pericoli
-        if (page != null && (page.equals("META-INF/context.xml") || page.equals("WEB-INF/web.xml"))) {
-            // Se lo è, reindirizza a una pagina sicura
+        if (page != null && (page.equals("META-INF/context.xml") || page.equals("WEB-INF/web.xml")) && !isStaticResource(page)) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
-            System.out.println("Errore qui"); 
             httpResponse.sendRedirect("/error.jsp");
-            return; // Termina qui per evitare che la richiesta venga inoltrata oltre
+            return;
         }
 
-        // Altrimenti, lascia passare la richiesta
         chain.doFilter(request, response);
+    }
+
+    private boolean isStaticResource(String page) {
+        return page.endsWith(".css") || page.endsWith(".js") || page.endsWith(".png") || page.endsWith(".jpg") || page.endsWith(".gif");
     }
 }
