@@ -12,6 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import java.lang.String;
+
 public class UserDao implements UserDaoInterfaccia {
 
 	private static DataSource ds;
@@ -74,62 +76,36 @@ public class UserDao implements UserDaoInterfaccia {
 
 
 	@Override
-	public synchronized UserBean doRetrieve(String username, String password) throws SQLException {
-		//preparing some objects for connecNon 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		
-		UserBean user = new UserBean();
-		
-		String searchQuery = "select * from " + UserDao.TABLE_NAME 
-							+ "	where username = ? "
-							+ " AND pwd = ? ";
-		
-		try
-			{
-			//connect to DB 
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(searchQuery);
-			preparedStatement.setString(1, username);
-			preparedStatement.setString(2, password);
-			ResultSet rs = preparedStatement.executeQuery();
-			boolean more = rs.next();
-			// if user does not exist set the isValid variable to false
-				if (!more) 
-					user.setValid(false);
-		
-				//if user exists set the isValid variable to true
-				else if (more) 
-				{
-					user.setUsername(rs.getString("username"));
-					user.setPassword(rs.getString("pwd"));
-					user.setEmail(rs.getString("email"));
-					user.setNome(rs.getString("nome"));
-					user.setCognome(rs.getString("cognome"));
-					user.setDataDiNascita(rs.getDate("data_nascita"));
-					user.setCartaDiCredito(rs.getString("carta_credito"));
-					user.setIndirizzo(rs.getString("indirizzo"));
-					user.setCap(rs.getString("cap"));
-					user.setAmministratore(rs.getBoolean("amministratore"));
-					user.setValid(true);
-				}
-			}
-			catch (Exception ex) 
-			{
-				System.out.println("Log In failed: An Exception has occurred! " + ex); 
-			}
-			finally {
-				try {
-					if (preparedStatement != null)
-							preparedStatement.close();
-					} 
-			finally {
-				if (connection != null)
-					connection.close();
-			}
-	 }
+	public UserBean doRetrieve(String username, String password) throws SQLException {
+	    Connection connection = null;
+	    PreparedStatement statement = null;
+	    ResultSet resultSet = null;
+	    UserBean user = null;
 
-		return user;
+	    /*
+	    try {
+	    	
+	        connection = // Ottieni la connessione al database
+	        String query = "SELECT * FROM cliente WHERE username = ? AND pwd = ?";
+	        statement = connection.prepareStatement(query);
+	        statement.setString(1, username);
+	        statement.setString(2, password); // Usa la password fornita, non la hash
+	        resultSet = statement.executeQuery();
+
+	        if (resultSet.next()) {
+	            // Costruisci l'oggetto UserBean con i dati recuperati dal database
+	            user = new UserBean();
+	            user.setUsername(resultSet.getString("username"));
+	            // Altri campi...
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        // Chiudi la connessione, lo statement e il resultSet
+	    }
+	    */
+
+	    return user;
 	}
 	
 	@Override
